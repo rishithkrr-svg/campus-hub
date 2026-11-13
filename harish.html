@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Hub | BCA Team Project</title>
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts (optional, page works without it) -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Our colours (change here to change the whole site) ---------- */
+    :root {
+      --ink: #14213d;
+      --teal: #0e7c86;
+      --saffron: #f2a900;
+      --mist: #f2f6fa;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: #fff; }
+    h1, h2, h3, h4, .navbar-brand { font-family: 'Sora', 'Manrope', sans-serif; }
+    section { padding: 80px 0; scroll-margin-top: 56px; }
+    .bg-mist { background: var(--mist); }
+
+    /* Navbar */
+    .navbar { background: var(--ink); }
+    .navbar .nav-link { color: #cfd8e6; }
+    .navbar .nav-link:hover, .navbar .nav-link.active { color: var(--saffron); }
+    .navbar-brand span { color: var(--saffron); }
+
+    /* Hero */
+    #home { background: var(--ink); color: #fff; padding: 110px 0 90px; }
+    #home .lead { color: #cfd8e6; max-width: 34rem; }
+    .btn-saffron { background: var(--saffron); color: var(--ink); font-weight: 700; border: 0; }
+    .btn-saffron:hover { background: #ffc933; color: var(--ink); }
+    .hero-panel { background: #1d2f55; border-radius: 16px; padding: 28px; border-left: 6px solid var(--saffron); }
+    .hero-panel code { color: #9fe3ea; display: block; line-height: 1.9; }
+
+    /* Team */
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 14px;
+      background: var(--teal); color: #fff; font: 700 1.9rem 'Sora', sans-serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .team-card { border: 1px solid #dbe3ee; border-radius: 14px; }
+    .team-card:hover { border-color: var(--teal); box-shadow: 0 6px 18px rgba(14,124,134,.15); }
+
+    /* Skills */
+    .progress { height: 14px; background: #dbe3ee; }
+    .progress-bar { background: var(--teal); width: 0; }
+
+    /* Tasks */
+    .task-done { text-decoration: line-through; color: #8a94a6; }
+    #taskList li { cursor: pointer; }
+
+    /* Footer + back to top */
+    footer { background: var(--ink); color: #cfd8e6; padding: 24px 0; }
+    #topBtn { position: fixed; right: 20px; bottom: 20px; display: none; z-index: 20; }
+
+    /* ---------- Member pages (shown inside this same file) ---------- */
+    #memberView { padding-top: 56px; background: var(--mist); min-height: 100vh; }
+    .m-hero { background: var(--ink); color: #fff; padding: 44px 0 40px; }
+    .m-avatar {
+      width: 96px; height: 96px; border-radius: 50%; background: var(--teal); color: #fff;
+      font: 700 2.4rem 'Sora', sans-serif; display: flex; align-items: center; justify-content: center;
+      border: 5px solid rgba(255,255,255,0.25);
+    }
+    .info-card { border: 1px solid #dbe3ee; border-radius: 14px; background: #fff; padding: 22px; margin-bottom: 20px; }
+    .info-card h2 { font-size: 1.1rem; color: var(--teal); margin-bottom: 12px; }
+    .quote { border-left: 5px solid var(--saffron); background: #fff8e6; padding: 14px 16px; border-radius: 0 10px 10px 0; font-style: italic; }
+    .badge-tech { background: var(--teal); font-weight: 600; }
+    .switcher .btn { border-radius: 20px; }
+    .switcher .btn.current { background: var(--saffron); border-color: var(--saffron); color: var(--ink); font-weight: 700; }
+    #editPanel { display: none; border: 2px dashed var(--teal); }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       PERSON 1: NAVBAR + HOME (HTML structure, Bootstrap navbar, grid)
+       ===================================================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">Campus<span>Hub</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+              aria-controls="menu" aria-expanded="false" aria-label="Open menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tasks">Task List</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mainSite">
+
+  <section id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <h1 class="display-4 fw-bold">One website, built by five of us.</h1>
+          <p class="lead my-4">
+            Campus Hub is our BCA team project from D.A.V. College Abohar. It uses HTML, CSS,
+            Bootstrap, JavaScript and jQuery, the same things we learned in our Web Design course.
+          </p>
+          <a href="#team" class="btn btn-saffron btn-lg me-2">Meet the team</a>
+          <a href="#tasks" class="btn btn-outline-light btn-lg">Try the task list</a>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-panel">
+            <h3 class="h5 mb-3">What is inside</h3>
+            <code>HTML5 - page structure</code>
+            <code>CSS3 - colours and layout</code>
+            <code>Bootstrap 5 - responsive grid</code>
+            <code>jQuery - task list and effects</code>
+            <code>JavaScript - form checking</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 2: TEAM (Bootstrap grid + cards)
+       ===================================================== -->
+  <section id="team" class="bg-mist">
+    <div class="container">
+      <h2 class="mb-2">Our team</h2>
+      <p class="mb-5">Five students, five sections. Each of us built one part of this site. Click a name to see that person's work.</p>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">H</div>
+            <h3 class="h6 mb-1"><a href="#member-1" class="stretched-link text-reset text-decoration-none">Harshdeep Kamboj</a></h3>
+            <p class="small mb-1">Home page and navbar</p>
+            <span class="small fw-bold" style="color: var(--teal);">View work &rarr;</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">N</div>
+            <h3 class="h6 mb-1"><a href="#member-2" class="stretched-link text-reset text-decoration-none">Neeraj</a></h3>
+            <p class="small mb-1">Team section</p>
+            <span class="small fw-bold" style="color: var(--teal);">View work &rarr;</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">G</div>
+            <h3 class="h6 mb-1"><a href="#member-3" class="stretched-link text-reset text-decoration-none">Gourav</a></h3>
+            <p class="small mb-1">Skills section</p>
+            <span class="small fw-bold" style="color: var(--teal);">View work &rarr;</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">V</div>
+            <h3 class="h6 mb-1"><a href="#member-4" class="stretched-link text-reset text-decoration-none">Vivek</a></h3>
+            <p class="small mb-1">Task list (jQuery)</p>
+            <span class="small fw-bold" style="color: var(--teal);">View work &rarr;</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">H</div>
+            <h3 class="h6 mb-1"><a href="#member-5" class="stretched-link text-reset text-decoration-none">Harish Kumar</a></h3>
+            <p class="small mb-1">Contact form (JavaScript)</p>
+            <span class="small fw-bold" style="color: var(--teal);">View work &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 3: SKILLS (Bootstrap progress bars, jQuery animate)
+       data-level = how full the bar is (0 to 100)
+       ===================================================== -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="mb-2">What we learned</h2>
+      <p class="mb-5">Our 4-month Web Design course at Dezora Technologies, Abohar.</p>
+      <div class="row g-5">
+        <div class="col-md-6">
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>HTML5</strong><span>85%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="85"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>CSS3</strong><span>80%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="80"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>Bootstrap 5</strong><span>75%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="75"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>JavaScript</strong><span>65%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="65"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>jQuery</strong><span>70%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="70"></div></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="accordion" id="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">What is Bootstrap?</button>
+              </h3>
+              <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faq">
+                <div class="accordion-body">A CSS framework with ready-made classes. We used it for the navbar, cards, grid and forms on this page.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">What is jQuery?</button>
+              </h3>
+              <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faq">
+                <div class="accordion-body">A JavaScript library that lets us write less code. The task list and the animated bars use it.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">Why is the site responsive?</button>
+              </h3>
+              <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faq">
+                <div class="accordion-body">Bootstrap's 12-column grid (col-md, col-lg) changes the layout for phone, tablet and desktop screens.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 4: TASK LIST (jQuery: click, append, remove, toggleClass)
+       ===================================================== -->
+  <section id="tasks" class="bg-mist">
+    <div class="container" style="max-width: 640px;">
+      <h2 class="mb-2">Team task list</h2>
+      <p class="mb-4">Add a task. Click a task to mark it done. Press the cross to delete it.</p>
+
+      <div class="input-group mb-3">
+        <input type="text" id="taskInput" class="form-control" placeholder="Example: finish the contact form">
+        <button id="addTask" class="btn btn-saffron">Add task</button>
+      </div>
+      <p id="taskError" class="text-danger small d-none">Please type a task first.</p>
+
+      <ul id="taskList" class="list-group mb-3"></ul>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <span id="taskCount" class="small">No tasks yet</span>
+        <button id="clearDone" class="btn btn-outline-secondary btn-sm">Remove done tasks</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 5: CONTACT FORM (JavaScript validation)
+       ===================================================== -->
+  <section id="contact">
+    <div class="container" style="max-width: 640px;">
+      <h2 class="mb-2">Contact us</h2>
+      <p class="mb-4">Send a message to the team. (This is a practice form, nothing is sent to a server.)</p>
+
+      <div id="formDone" class="alert alert-success d-none" role="alert"></div>
+
+      <form id="contactForm" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Your name</label>
+          <input type="text" id="name" class="form-control">
+          <div class="invalid-feedback">Enter your name (at least 3 letters).</div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control">
+          <div class="invalid-feedback">Enter a valid email, like name@example.com.</div>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea id="message" rows="4" class="form-control"></textarea>
+          <div class="invalid-feedback">Write a message of at least 10 characters.</div>
+        </div>
+        <button type="submit" class="btn btn-saffron btn-lg">Send message</button>
+      </form>
+    </div>
+  </section>
+
+  </div>
+  <!-- end of main site -->
+
+  <!-- =====================================================
+       MEMBER PAGES (one page for each team member)
+       Opens when you click a name in the Team section
+       ===================================================== -->
+  <div id="memberView" class="d-none">
+  <header class="m-hero">
+    <div class="container">
+      <a href="#team" class="btn btn-sm btn-outline-light mb-3">&larr; Back to team</a>
+      <div class="d-flex align-items-center gap-4 flex-wrap">
+        <div class="m-avatar" id="mAvatar">?</div>
+        <div>
+          <h1 class="h2 fw-bold mb-1" id="mName"></h1>
+          <span class="badge text-bg-warning mb-2" id="mSection"></span>
+          <p class="mb-3" id="mRole" style="color:#cfd8e6;"></p>
+          <a id="mOpenSection" href="#home" class="btn btn-sm btn-outline-light me-2">See this section on the website</a>
+          <button id="editBtn" class="btn btn-sm btn-saffron">Edit this page</button>
+          <button id="logoutBtn" class="btn btn-sm btn-outline-light d-none">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mt-4" style="max-width: 860px;">
+
+    <!-- ===== Switch between members ===== -->
+    <div class="switcher d-flex flex-wrap gap-2 mb-4" id="switcher"></div>
+
+    <!-- ===== Edit panel (only visible after login) ===== -->
+    <div class="info-card" id="editPanel">
+      <h2>Edit your page</h2>
+      <p class="small text-muted">Your changes are saved in this browser. Press Save when you are done.</p>
+      <form id="editForm">
+        <div class="mb-3">
+          <label class="form-label" for="fRole">Your role (one line)</label>
+          <input type="text" id="fRole" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="fSummary">What do I do? (short paragraph)</label>
+          <textarea id="fSummary" rows="3" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="fTasks">My tasks (write one task on each line)</label>
+          <textarea id="fTasks" rows="5" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="fTech">Technologies (separate with commas)</label>
+          <input type="text" id="fTech" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="fExplain">How my part works (simple explanation)</label>
+          <textarea id="fExplain" rows="5" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="fViva">What I will say in the viva</label>
+          <textarea id="fViva" rows="3" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-saffron">Save</button>
+        <button type="button" id="cancelEdit" class="btn btn-outline-secondary">Cancel</button>
+        <button type="button" id="resetEdit" class="btn btn-outline-danger float-end">Reset to original</button>
+      </form>
+      <div id="savedMsg" class="alert alert-success mt-3 mb-0 d-none">Saved. Your page is updated.</div>
+    </div>
+
+    <!-- ===== Work details ===== -->
+    <div class="info-card">
+      <h2>What I do</h2>
+      <p class="mb-0" id="mSummary"></p>
+    </div>
+
+    <div class="info-card">
+      <h2>My tasks</h2>
+      <ul class="mb-0" id="mTasks"></ul>
+    </div>
+
+    <div class="info-card">
+      <h2>Technologies I used</h2>
+      <div id="mTech" class="d-flex flex-wrap gap-2"></div>
+    </div>
+
+    <div class="info-card">
+      <h2>How my part works</h2>
+      <p class="mb-0" id="mExplain" style="white-space: pre-line;"></p>
+    </div>
+
+    <div class="info-card">
+      <h2>What I say in the viva</h2>
+      <div class="quote" id="mViva"></div>
+    </div>
+  </main>
+  </div>
+
+  <footer>
+    <div class="container text-center small">
+      Campus Hub - BCA II Year, D.A.V. College Abohar - Web Design project
+    </div>
+  </footer>
+
+  <!-- ===== Login popup ===== -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title h5">Login to edit</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="loginForm">
+          <div class="modal-body">
+            <p class="small text-muted">Only <strong id="loginFor"></strong> can edit this page.</p>
+            <div class="mb-3">
+              <label class="form-label" for="loginUser">ID</label>
+              <input type="text" id="loginUser" class="form-control" autocomplete="off">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="loginPass">Password</label>
+              <input type="password" id="loginPass" class="form-control" autocomplete="off">
+            </div>
+            <div id="loginError" class="text-danger small d-none">Wrong ID or password. Try again.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-saffron">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <button id="topBtn" class="btn btn-saffron rounded-circle" aria-label="Back to top">&uarr;</button>
+
+  <!-- jQuery + Bootstrap JS (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      /* ---------- PERSON 1: navbar highlight + back to top ---------- */
+      $(window).on('scroll', function () {
+        var pos = $(window).scrollTop() + 120;
+        $('section').each(function () {
+          if (pos >= $(this).offset().top && pos < $(this).offset().top + $(this).outerHeight()) {
+            $('.nav-link').removeClass('active');
+            $('.nav-link[href="#' + $(this).attr('id') + '"]').addClass('active');
+          }
+        });
+        if ($(window).scrollTop() > 400) { $('#topBtn').fadeIn(); } else { $('#topBtn').fadeOut(); }
+      });
+      $('#topBtn').click(function () { $('html, body').animate({ scrollTop: 0 }, 500); });
+      $('.nav-link').click(function () { $('#menu').collapse('hide'); });
+
+      /* ---------- PERSON 3: fill the skill bars ---------- */
+      var barsDone = false;
+      function fillBars() {
+        if (barsDone || !$('#mainSite').is(':visible')) return;
+        if ($(window).scrollTop() + $(window).height() > $('#skills').offset().top + 150) {
+          barsDone = true;
+          $('.progress-bar').each(function () {
+            $(this).animate({ width: $(this).data('level') + '%' }, 1000);
+          });
+        }
+      }
+      $(window).on('scroll', fillBars);
+      fillBars();
+
+      /* ---------- PERSON 4: task list ---------- */
+      function updateCount() {
+        var total = $('#taskList li').length;
+        var done = $('#taskList li.task-done').length;
+        if (total === 0) { $('#taskCount').text('No tasks yet'); }
+        else { $('#taskCount').text(total + ' tasks, ' + done + ' done'); }
+      }
+
+      function addTask() {
+        var text = $.trim($('#taskInput').val());
+        if (text === '') { $('#taskError').removeClass('d-none'); return; }
+        $('#taskError').addClass('d-none');
+
+        var item = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
+        item.append($('<span></span>').text(text));
+        item.append('<button class="btn btn-sm btn-outline-danger remove" aria-label="Delete task">&times;</button>');
+        $('#taskList').append(item);
+
+        $('#taskInput').val('').focus();
+        updateCount();
+      }
+
+      $('#addTask').click(addTask);
+      $('#taskInput').keypress(function (e) { if (e.which === 13) { addTask(); } });
+
+      $('#taskList').on('click', 'li', function () { $(this).toggleClass('task-done'); updateCount(); });
+      $('#taskList').on('click', '.remove', function (e) {
+        e.stopPropagation();
+        $(this).parent().fadeOut(200, function () { $(this).remove(); updateCount(); });
+      });
+      $('#clearDone').click(function () { $('#taskList li.task-done').remove(); updateCount(); });
+
+      /* Starter tasks so the list is not empty */
+      $('#taskInput').val('Design the home page'); addTask();
+      $('#taskInput').val('Add the contact form'); addTask();
+      updateCount();
+
+      /* ---------- PERSON 5: contact form checking (plain JavaScript logic) ---------- */
+      $('#contactForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var name = $.trim($('#name').val());
+        var email = $.trim($('#email').val());
+        var message = $.trim($('#message').val());
+        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        $('#name').toggleClass('is-invalid', name.length < 3);
+        $('#email').toggleClass('is-invalid', !emailOk);
+        $('#message').toggleClass('is-invalid', message.length < 10);
+
+        if (name.length >= 3 && emailOk && message.length >= 10) {
+          $('#formDone').removeClass('d-none').text('Thank you, ' + name + '. Your message is ready to send.');
+          this.reset();
+        } else {
+          $('#formDone').addClass('d-none');
+        }
+      });
+    });
+
+    /* =====================================================
+       MEMBER DATA - change IDs and passwords here.
+       Anyone who opens the code can see these, so this
+       login is only for the project demo.
+       ===================================================== */
+    var members = [
+      {
+        id: 1, user: 'harshdeep', pass: 'hd@1234',
+        name: 'Harshdeep Kamboj', section: 'Navbar + Home', anchor: 'home',
+        role: 'Navbar and Home page developer',
+        summary: 'I built the top menu (navbar) and the Home section, which is the first thing a visitor sees. On a phone the menu turns into a three-line button.',
+        tasks: [
+          'Built the Bootstrap navbar (navbar-expand-lg) with links to every section',
+          'Made the Home section with a heading, two buttons and an info box using the grid (col-lg-7 and col-lg-5)',
+          'Added jQuery that highlights the menu link of the section you are viewing',
+          'Added the back-to-top button that appears after scrolling down'
+        ],
+        tech: ['HTML5', 'CSS3', 'Bootstrap 5', 'jQuery'],
+        explain: 'The navbar uses the Bootstrap collapse feature. On a big screen the links sit in a row. On a phone they hide behind the toggler button.\nFor the highlight, jQuery checks how far the page is scrolled and adds the class "active" to the matching link.\nThe back-to-top button appears with fadeIn() and goes up with animate({scrollTop: 0}).',
+        viva: 'I made the navbar and the Home page. I used the Bootstrap navbar and grid, and jQuery for the scroll highlight and the back-to-top button.'
+      },
+      {
+        id: 2, user: 'neeraj', pass: 'nr@1234',
+        name: 'Neeraj', section: 'Team', anchor: 'team',
+        role: 'Team section developer',
+        summary: 'I made the Team section that shows all five members as cards. Clicking a name opens that person\'s own page with their work.',
+        tasks: [
+          'Made one Bootstrap card for each team member',
+          'Used the grid classes col-12, col-sm-6 and col-lg so the cards fit phone, tablet and computer',
+          'Made the round avatar with CSS (border-radius: 50%)',
+          'Linked every card to the member page'
+        ],
+        tech: ['HTML5', 'CSS3', 'Bootstrap 5'],
+        explain: 'Each member is a Bootstrap card inside a row. The classes col-12, col-sm-6 and col-lg decide how many cards fit in one line: one on a phone, two on a tablet and five on a computer.\nThe avatar is a div with the same width and height and border-radius 50%, which turns the square into a circle.\nEach card has a link like #member-2. The page reads that number from the address and shows the details of that member.',
+        viva: 'I made the Team section with Bootstrap cards and the responsive grid. Every card opens a separate page for that member.'
+      },
+      {
+        id: 3, user: 'gourav', pass: 'gr@1234',
+        name: 'Gourav', section: 'Skills', anchor: 'skills',
+        role: 'Skills section developer',
+        summary: 'I made the Skills section with progress bars that fill up when you scroll to them, and an accordion with short questions and answers.',
+        tasks: [
+          'Made five Bootstrap progress bars (HTML, CSS, Bootstrap, JavaScript, jQuery)',
+          'Wrote jQuery so the bars grow from 0 to their percentage when the section is visible',
+          'Added the Bootstrap accordion with three questions',
+          'Kept the percentage inside the data-level attribute of each bar'
+        ],
+        tech: ['HTML5', 'Bootstrap 5', 'jQuery'],
+        explain: 'Every bar stores its percentage in data-level. When the Skills section scrolls into view, jQuery animate() changes the width from 0 to that percentage in one second.\nThe accordion is a Bootstrap component. data-bs-toggle="collapse" opens one answer, and data-bs-parent closes the other answers.',
+        viva: 'I made the Skills section. The progress bars are animated with jQuery, and the questions use the Bootstrap accordion.'
+      },
+      {
+        id: 4, user: 'vivek', pass: 'vk@1234',
+        name: 'Vivek', section: 'Task List', anchor: 'tasks',
+        role: 'Task list developer (jQuery)',
+        summary: 'I built the team task list. You can add a task, click it to mark it done, and delete it with the cross button. It also shows how many tasks are done.',
+        tasks: [
+          'Made the input box, Add button and list with Bootstrap',
+          'Wrote addTask() with jQuery to add a new task to the list',
+          'Used toggleClass() so a click marks a task done or not done',
+          'Added the delete button and the counter text'
+        ],
+        tech: ['HTML5', 'Bootstrap 5', 'jQuery'],
+        explain: 'When Add is pressed, addTask() reads the input with val(). If it is empty, an error shows. Otherwise it builds a new list item and puts it into the list with append().\nClicking a task uses toggleClass("task-done"), and CSS draws a line through the text.\nI used on() for clicks inside the list, because tasks are added after the page loads. A normal click() would not work on them.',
+        viva: 'I made the task list with jQuery. It adds, marks and deletes tasks using append(), toggleClass() and remove().'
+      },
+      {
+        id: 5, user: 'harish', pass: 'hk@1234',
+        name: 'Harish Kumar', section: 'Contact Form', anchor: 'contact',
+        role: 'Contact form developer (JavaScript)',
+        summary: 'I built the contact form. Before the message is accepted, JavaScript checks the name, the email and the message, and shows a clear error if something is wrong.',
+        tasks: [
+          'Made the form with name, email and message fields using Bootstrap',
+          'Checked that the name has at least 3 letters and the message at least 10 characters',
+          'Checked the email format with a regular expression',
+          'Showed red errors for wrong fields and a green message when everything is correct'
+        ],
+        tech: ['HTML5', 'Bootstrap 5', 'JavaScript', 'jQuery'],
+        explain: 'When Send is pressed, preventDefault() stops the page from reloading. Then the code reads all three fields and checks them.\nThe email is tested with a regular expression, which is a pattern like text@text.text.\nFor a wrong field, Bootstrap\'s is-invalid class is added and the red message appears. If all fields are correct, a thank-you message is shown and the form is cleared with reset().',
+        viva: 'I made the contact form and its validation in JavaScript. It checks name, email and message and shows errors using Bootstrap classes.'
+      }
+    ];
+
+
+    $(document).ready(function () {
+
+      var current = null;
+
+      function getMember(n) { return members.filter(function (m) { return m.id === n; })[0]; }
+      function storeKey() { return 'campushub_member_' + current.id; }
+      function authKey() { return 'campushub_auth_' + current.id; }
+
+      /* ---------- saved changes (if this member edited before) ---------- */
+      function loadData() {
+        var data = {
+          role: current.role, summary: current.summary, tasks: current.tasks.slice(),
+          tech: current.tech.slice(), explain: current.explain, viva: current.viva
+        };
+        try {
+          var saved = JSON.parse(localStorage.getItem(storeKey()));
+          if (saved) { $.extend(data, saved); }
+        } catch (e) { /* nothing saved, use the original text */ }
+        return data;
+      }
+
+      function isLoggedIn() {
+        try { return sessionStorage.getItem(authKey()) === 'yes'; } catch (e) { return false; }
+      }
+
+      /* ---------- fill the member page ---------- */
+      function render() {
+        var d = loadData();
+        $('#mAvatar').text(current.name.charAt(0));
+        $('#mName').text(current.name);
+        $('#mSection').text(current.section);
+        $('#mRole').text(d.role);
+        $('#mOpenSection').attr('href', '#' + current.anchor);
+        $('#mSummary').text(d.summary);
+        $('#mExplain').text(d.explain);
+        $('#mViva').text(d.viva);
+        $('#mTasks').empty();
+        $.each(d.tasks, function (i, t) { $('#mTasks').append($('<li></li>').text(t)); });
+        $('#mTech').empty();
+        $.each(d.tech, function (i, t) { $('#mTech').append($('<span class="badge badge-tech"></span>').text(t)); });
+      }
+
+      /* ---------- buttons to jump between members (made once) ---------- */
+      $.each(members, function (i, m) {
+        $('#switcher').append($('<a class="btn btn-outline-secondary btn-sm"></a>')
+          .attr('href', '#member-' + m.id).attr('data-id', m.id).text(m.name));
+      });
+
+      function showMember(n) {
+        current = getMember(n);
+        document.title = current.name + ' | Campus Hub';
+        $('#mainSite').addClass('d-none');
+        $('#memberView').removeClass('d-none');
+        $('.nav-link').removeClass('active');
+        $('#switcher .btn').each(function () { $(this).toggleClass('current', $(this).data('id') === n); });
+        $('#editPanel').hide();
+        $('#logoutBtn').toggleClass('d-none', !isLoggedIn());
+        $('#loginFor').text(current.name);
+        render();
+        window.scrollTo(0, 0);
+      }
+
+      function showMain(hash) {
+        document.title = 'Campus Hub | BCA Team Project';
+        $('#memberView').addClass('d-none');
+        $('#mainSite').removeClass('d-none');
+        var el = hash && hash.length > 1 ? document.getElementById(hash.slice(1)) : null;
+        if (el) { setTimeout(function () { el.scrollIntoView(); }, 0); }
+      }
+
+      /* ---------- which page to show? (decided by the address: #member-3 or #team) ---------- */
+      function route() {
+        var m = /^#member-(\d)$/.exec(window.location.hash);
+        if (m && getMember(parseInt(m[1], 10))) { showMember(parseInt(m[1], 10)); }
+        else { showMain(window.location.hash); }
+      }
+      $(window).on('hashchange', route);
+
+      /* ---------- login + edit ---------- */
+      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+
+      function openEditor() {
+        var d = loadData();
+        $('#fRole').val(d.role);
+        $('#fSummary').val(d.summary);
+        $('#fTasks').val(d.tasks.join('\n'));
+        $('#fTech').val(d.tech.join(', '));
+        $('#fExplain').val(d.explain);
+        $('#fViva').val(d.viva);
+        $('#savedMsg').addClass('d-none');
+        $('#editPanel').slideDown();
+        $('#logoutBtn').removeClass('d-none');
+        $('html, body').animate({ scrollTop: $('#editPanel').offset().top - 70 }, 400);
+      }
+
+      $('#editBtn').click(function () {
+        if (isLoggedIn()) { openEditor(); }
+        else { $('#loginError').addClass('d-none'); $('#loginForm')[0].reset(); loginModal.show(); }
+      });
+
+      $('#loginForm').on('submit', function (e) {
+        e.preventDefault();
+        var u = $.trim($('#loginUser').val());
+        var p = $('#loginPass').val();
+        if (u === current.user && p === current.pass) {
+          try { sessionStorage.setItem(authKey(), 'yes'); } catch (err) { }
+          loginModal.hide();
+          openEditor();
+        } else {
+          $('#loginError').removeClass('d-none');
+        }
+      });
+
+      $('#logoutBtn').click(function () {
+        try { sessionStorage.removeItem(authKey()); } catch (err) { }
+        $('#editPanel').slideUp();
+        $(this).addClass('d-none');
+      });
+
+      $('#editForm').on('submit', function (e) {
+        e.preventDefault();
+        var tasks = $.grep($('#fTasks').val().split('\n'), function (t) { return $.trim(t) !== ''; });
+        var tech = $.grep($('#fTech').val().split(','), function (t) { return $.trim(t) !== ''; });
+        var data = {
+          role: $.trim($('#fRole').val()),
+          summary: $.trim($('#fSummary').val()),
+          tasks: $.map(tasks, function (t) { return $.trim(t); }),
+          tech: $.map(tech, function (t) { return $.trim(t); }),
+          explain: $.trim($('#fExplain').val()),
+          viva: $.trim($('#fViva').val())
+        };
+        try { localStorage.setItem(storeKey(), JSON.stringify(data)); } catch (err) { }
+        render();
+        $('#savedMsg').removeClass('d-none');
+      });
+
+      $('#cancelEdit').click(function () { $('#editPanel').slideUp(); });
+
+      $('#resetEdit').click(function () {
+        if (confirm('Go back to the original text?')) {
+          try { localStorage.removeItem(storeKey()); } catch (err) { }
+          render();
+          openEditor();
+        }
+      });
+
+      route();   // decide the first page when the file opens
+    });
+  </script>
+</body>
+</html>
