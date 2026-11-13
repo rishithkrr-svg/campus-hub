@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Hub | BCA Team Project</title>
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts (optional, page works without it) -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Our colours (change here to change the whole site) ---------- */
+    :root {
+      --ink: #14213d;
+      --teal: #0e7c86;
+      --saffron: #f2a900;
+      --mist: #f2f6fa;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: #fff; }
+    h1, h2, h3, h4, .navbar-brand { font-family: 'Sora', 'Manrope', sans-serif; }
+    section { padding: 80px 0; scroll-margin-top: 56px; }
+    .bg-mist { background: var(--mist); }
+
+    /* Navbar */
+    .navbar { background: var(--ink); }
+    .navbar .nav-link { color: #cfd8e6; }
+    .navbar .nav-link:hover, .navbar .nav-link.active { color: var(--saffron); }
+    .navbar-brand span { color: var(--saffron); }
+
+    /* Hero */
+    #home { background: var(--ink); color: #fff; padding: 110px 0 90px; }
+    #home .lead { color: #cfd8e6; max-width: 34rem; }
+    .btn-saffron { background: var(--saffron); color: var(--ink); font-weight: 700; border: 0; }
+    .btn-saffron:hover { background: #ffc933; color: var(--ink); }
+    .hero-panel { background: #1d2f55; border-radius: 16px; padding: 28px; border-left: 6px solid var(--saffron); }
+    .hero-panel code { color: #9fe3ea; display: block; line-height: 1.9; }
+
+    /* Team */
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 14px;
+      background: var(--teal); color: #fff; font: 700 1.9rem 'Sora', sans-serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .team-card { border: 1px solid #dbe3ee; border-radius: 14px; }
+    .team-card:hover { border-color: var(--teal); }
+
+    /* Skills */
+    .progress { height: 14px; background: #dbe3ee; }
+    .progress-bar { background: var(--teal); width: 0; }
+
+    /* Tasks */
+    .task-done { text-decoration: line-through; color: #8a94a6; }
+    #taskList li { cursor: pointer; }
+
+    /* Footer + back to top */
+    footer { background: var(--ink); color: #cfd8e6; padding: 24px 0; }
+    #topBtn { position: fixed; right: 20px; bottom: 20px; display: none; z-index: 20; }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       PERSON 1: NAVBAR + HOME (HTML structure, Bootstrap navbar, grid)
+       ===================================================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">Campus<span>Hub</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+              aria-controls="menu" aria-expanded="false" aria-label="Open menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tasks">Task List</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <h1 class="display-4 fw-bold">One website, built by five of us.</h1>
+          <p class="lead my-4">
+            Campus Hub is our BCA team project from D.A.V. College Abohar. It uses HTML, CSS,
+            Bootstrap, JavaScript and jQuery, the same things we learned in our Web Design course.
+          </p>
+          <a href="#team" class="btn btn-saffron btn-lg me-2">Meet the team</a>
+          <a href="#tasks" class="btn btn-outline-light btn-lg">Try the task list</a>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-panel">
+            <h3 class="h5 mb-3">What is inside</h3>
+            <code>HTML5 - page structure</code>
+            <code>CSS3 - colours and layout</code>
+            <code>Bootstrap 5 - responsive grid</code>
+            <code>jQuery - task list and effects</code>
+            <code>JavaScript - form checking</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 2: TEAM (Bootstrap grid + cards)
+       ===================================================== -->
+  <section id="team" class="bg-mist">
+    <div class="container">
+      <h2 class="mb-2">Our team</h2>
+      <p class="mb-5">Five students, five sections. Each of us built one part of this site.</p>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">H</div>
+            <h3 class="h6 mb-1">Harshdeep Kamboj</h3>
+            <p class="small mb-0">Home page and navbar</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">N</div>
+            <h3 class="h6 mb-1">Neeraj</h3>
+            <p class="small mb-0">Team section</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">G</div>
+            <h3 class="h6 mb-1">Gourav</h3>
+            <p class="small mb-0">Skills section</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">V</div>
+            <h3 class="h6 mb-1">Vivek</h3>
+            <p class="small mb-0">Task list (jQuery)</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="card team-card h-100 text-center p-3">
+            <div class="avatar">H</div>
+            <h3 class="h6 mb-1">Harish Kumar</h3>
+            <p class="small mb-0">Contact form (JavaScript)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 3: SKILLS (Bootstrap progress bars, jQuery animate)
+       data-level = how full the bar is (0 to 100)
+       ===================================================== -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="mb-2">What we learned</h2>
+      <p class="mb-5">Our 4-month Web Design course at Dezora Technologies, Abohar.</p>
+      <div class="row g-5">
+        <div class="col-md-6">
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>HTML5</strong><span>85%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="85"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>CSS3</strong><span>80%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="80"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>Bootstrap 5</strong><span>75%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="75"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>JavaScript</strong><span>65%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="65"></div></div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between"><strong>jQuery</strong><span>70%</span></div>
+            <div class="progress"><div class="progress-bar" data-level="70"></div></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="accordion" id="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">What is Bootstrap?</button>
+              </h3>
+              <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faq">
+                <div class="accordion-body">A CSS framework with ready-made classes. We used it for the navbar, cards, grid and forms on this page.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">What is jQuery?</button>
+              </h3>
+              <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faq">
+                <div class="accordion-body">A JavaScript library that lets us write less code. The task list and the animated bars use it.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">Why is the site responsive?</button>
+              </h3>
+              <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faq">
+                <div class="accordion-body">Bootstrap's 12-column grid (col-md, col-lg) changes the layout for phone, tablet and desktop screens.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 4: TASK LIST (jQuery: click, append, remove, toggleClass)
+       ===================================================== -->
+  <section id="tasks" class="bg-mist">
+    <div class="container" style="max-width: 640px;">
+      <h2 class="mb-2">Team task list</h2>
+      <p class="mb-4">Add a task. Click a task to mark it done. Press the cross to delete it.</p>
+
+      <div class="input-group mb-3">
+        <input type="text" id="taskInput" class="form-control" placeholder="Example: finish the contact form">
+        <button id="addTask" class="btn btn-saffron">Add task</button>
+      </div>
+      <p id="taskError" class="text-danger small d-none">Please type a task first.</p>
+
+      <ul id="taskList" class="list-group mb-3"></ul>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <span id="taskCount" class="small">No tasks yet</span>
+        <button id="clearDone" class="btn btn-outline-secondary btn-sm">Remove done tasks</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSON 5: CONTACT FORM (JavaScript validation)
+       ===================================================== -->
+  <section id="contact">
+    <div class="container" style="max-width: 640px;">
+      <h2 class="mb-2">Contact us</h2>
+      <p class="mb-4">Send a message to the team. (This is a practice form, nothing is sent to a server.)</p>
+
+      <div id="formDone" class="alert alert-success d-none" role="alert"></div>
+
+      <form id="contactForm" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Your name</label>
+          <input type="text" id="name" class="form-control">
+          <div class="invalid-feedback">Enter your name (at least 3 letters).</div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control">
+          <div class="invalid-feedback">Enter a valid email, like name@example.com.</div>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea id="message" rows="4" class="form-control"></textarea>
+          <div class="invalid-feedback">Write a message of at least 10 characters.</div>
+        </div>
+        <button type="submit" class="btn btn-saffron btn-lg">Send message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container text-center small">
+      Campus Hub - BCA II Year, D.A.V. College Abohar - Web Design project
+    </div>
+  </footer>
+
+  <button id="topBtn" class="btn btn-saffron rounded-circle" aria-label="Back to top">&uarr;</button>
+
+  <!-- jQuery + Bootstrap JS (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      /* ---------- PERSON 1: navbar highlight + back to top ---------- */
+      $(window).on('scroll', function () {
+        var pos = $(window).scrollTop() + 120;
+        $('section').each(function () {
+          if (pos >= $(this).offset().top && pos < $(this).offset().top + $(this).outerHeight()) {
+            $('.nav-link').removeClass('active');
+            $('.nav-link[href="#' + $(this).attr('id') + '"]').addClass('active');
+          }
+        });
+        if ($(window).scrollTop() > 400) { $('#topBtn').fadeIn(); } else { $('#topBtn').fadeOut(); }
+      });
+      $('#topBtn').click(function () { $('html, body').animate({ scrollTop: 0 }, 500); });
+      $('.nav-link').click(function () { $('#menu').collapse('hide'); });
+
+      /* ---------- PERSON 3: fill the skill bars ---------- */
+      var barsDone = false;
+      function fillBars() {
+        if (barsDone) return;
+        if ($(window).scrollTop() + $(window).height() > $('#skills').offset().top + 150) {
+          barsDone = true;
+          $('.progress-bar').each(function () {
+            $(this).animate({ width: $(this).data('level') + '%' }, 1000);
+          });
+        }
+      }
+      $(window).on('scroll', fillBars);
+      fillBars();
+
+      /* ---------- PERSON 4: task list ---------- */
+      function updateCount() {
+        var total = $('#taskList li').length;
+        var done = $('#taskList li.task-done').length;
+        if (total === 0) { $('#taskCount').text('No tasks yet'); }
+        else { $('#taskCount').text(total + ' tasks, ' + done + ' done'); }
+      }
+
+      function addTask() {
+        var text = $.trim($('#taskInput').val());
+        if (text === '') { $('#taskError').removeClass('d-none'); return; }
+        $('#taskError').addClass('d-none');
+
+        var item = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
+        item.append($('<span></span>').text(text));
+        item.append('<button class="btn btn-sm btn-outline-danger remove" aria-label="Delete task">&times;</button>');
+        $('#taskList').append(item);
+
+        $('#taskInput').val('').focus();
+        updateCount();
+      }
+
+      $('#addTask').click(addTask);
+      $('#taskInput').keypress(function (e) { if (e.which === 13) { addTask(); } });
+
+      $('#taskList').on('click', 'li', function () { $(this).toggleClass('task-done'); updateCount(); });
+      $('#taskList').on('click', '.remove', function (e) {
+        e.stopPropagation();
+        $(this).parent().fadeOut(200, function () { $(this).remove(); updateCount(); });
+      });
+      $('#clearDone').click(function () { $('#taskList li.task-done').remove(); updateCount(); });
+
+      /* Starter tasks so the list is not empty */
+      $('#taskInput').val('Design the home page'); addTask();
+      $('#taskInput').val('Add the contact form'); addTask();
+      updateCount();
+
+      /* ---------- PERSON 5: contact form checking (plain JavaScript logic) ---------- */
+      $('#contactForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var name = $.trim($('#name').val());
+        var email = $.trim($('#email').val());
+        var message = $.trim($('#message').val());
+        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        $('#name').toggleClass('is-invalid', name.length < 3);
+        $('#email').toggleClass('is-invalid', !emailOk);
+        $('#message').toggleClass('is-invalid', message.length < 10);
+
+        if (name.length >= 3 && emailOk && message.length >= 10) {
+          $('#formDone').removeClass('d-none').text('Thank you, ' + name + '. Your message is ready to send.');
+          this.reset();
+        } else {
+          $('#formDone').addClass('d-none');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
